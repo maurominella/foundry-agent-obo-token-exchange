@@ -10,9 +10,9 @@
 git clone https://github.com/maurominella/foundry-agent-obo-token-exchange.git
 ```
 
-> **Author:** Mauro Minella — Senior Cloud Solution Architect, Microsoft
-> **Status:** Validated end-to-end in a development environment
-> **Scope:** How to carry the identity of the user signed in to Microsoft Teams all the way from the Teams client, through a custom bot and a Microsoft Foundry hosted agent (published to the Agent 365 registry), down to an Entra-protected backend that the agent calls on the user's behalf.
+> - **Author:** Mauro Minella — Senior Cloud Solution Architect, Microsoft
+> - **Status:** Validated end-to-end in a development environment
+> - **Scope:** How to carry the identity of the user signed in to Microsoft Teams all the way from the Teams client, through a custom bot and a Microsoft Foundry hosted agent (published to the Agent 365 registry), down to an Entra-protected backend that the agent calls on the user's behalf.
 
 ---
 
