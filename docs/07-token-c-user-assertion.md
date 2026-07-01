@@ -101,7 +101,7 @@ In both cases the required parameters are exactly those already identified:
 
 The screenshot below shows exactly these values: the bot's identity (`client_id`, `client_secret`, Token Exchange URL) and the downstream scope (the dedicated app's scope).
 
-![OAuth Connection for Token C — settings](images/07-01-oauth-connection-token-c-settings.png)
+![OAuth Connection for Token C — settings](images/07-01-oauth-connection-token-c-settings.png)<br/>
 *OAuth Connection for Token C — the bot's identity plus the downstream (App-OBO) scope*
 
 ## 7.3 Characteristics of the Downstream Registered Application
