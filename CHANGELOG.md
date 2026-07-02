@@ -9,6 +9,12 @@ and this project uses simple, dated version tags (`v1.0`, `v1.1`, …).
 > Changes are additive by default; any rename, reorder, split, or merge is called
 > out explicitly below.
 
+## [v1.1] — 2026-07-02
+
+### Changed
+- **Chapter 04 §(1D) — OBO via the Bot's OAuth Connection.** Corrected the scope the OAuth Connection requests: it targets the **App-OBO** application (`api://app-obo/3a0fad96-b026-4f5f-914a-fc6348656f6b/access_as_user`), **not** Foundry (`https://ai.azure.com/.default`). Consequently the outgoing token now carries `aud = api://app-obo/3a0fad96-…` and `scp = access_as_user`, so the Foundry Hosted Agent can perform the downstream OBO exchange (e.g. toward Microsoft Graph).
+- Reworded the *Token Exchange URL* and `client_id` bullets in §(1D) accordingly, and **replaced the OAuth Connection screenshot** (`docs/images/04-05-azure-bot-oauth-connection-foundry.png`) with the corrected one.
+
 ## [v1.0] — 2026-07-01
 
 ### Added
