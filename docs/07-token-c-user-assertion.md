@@ -26,9 +26,11 @@ We could use the Bot's app, but it is conceptually dirty: we would mix the Bot's
 
 The scope is what we will use to create Token C, which becomes the `user_assertion`.
 
-> **Why not use Foundry as the scope?** If Token C had `audience = Foundry` (`https://ai.azure.com`), the agent would have to perform OBO using Foundry's `client_id` + `client_secret`, which it obviously does not possess. So it is impossible.
+The scope `api://app-obo/3a0fad96-b026-4f5f-914a-fc6348656f6b/access_as_user` makes Entra place the claims `aud = api://app-obo/3a0fad96-b026-4f5f-914a-fc6348656f6b` and `scp = access_as_user` in the token. This allows the Foundry Hosted Agent to perform the OBO exchange to obtain the token toward the required downstream backend (e.g. MS Graph).
 
-At this point we can show the code of the Foundry agent that receives the `user_assertion` and exchanges it, via OBO, for a token toward Graph — which we call **Token D**:
+> **And what if we used Foundry (e.g. `https://ai.azure.com/.default`) as the scope?** In that case, the agent would have to perform OBO using Foundry's `client_id` + `client_secret`, which it obviously does not possess. So it is impossible.
+
+So let's look at the code of the Foundry agent that receives the `user_assertion` and exchanges it, via OBO, for a token toward Graph — which we call **Token D**:
 
 ```python
 tenant_id     = os.environ.get("APP_OBO_TENANT_ID")
@@ -101,7 +103,7 @@ In both cases the required parameters are exactly those already identified:
 
 The screenshot below shows exactly these values: the bot's identity (`client_id`, `client_secret`, Token Exchange URL) and the downstream scope (the dedicated app's scope).
 
-![OAuth Connection for Token C — settings](images/07-01-oauth-connection-token-c-settings.png)<br/>
+![OAuth Connection for Token C — settings](images/07-01-oauth-connection-token-c-settings.png)
 *OAuth Connection for Token C — the bot's identity plus the downstream (App-OBO) scope*
 
 ## 7.3 Characteristics of the Downstream Registered Application

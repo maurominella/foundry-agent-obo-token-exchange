@@ -9,6 +9,13 @@ and this project uses simple, dated version tags (`v1.0`, `v1.1`, …).
 > Changes are additive by default; any rename, reorder, split, or merge is called
 > out explicitly below.
 
+## [v1.2] — 2026-07-02
+
+### Changed
+- **Chapter 04 §(1D) — OBO via the Bot's OAuth Connection.** Reverted the OAuth Connection scope back to Foundry's `https://ai.azure.com/.default`, with a clearer explanation: on this Approach-1 path the connection mints a **user-token** toward Foundry (`aud = https://ai.azure.com`), which Foundry validates then strips, and which requires the **Foundry User** RBAC role on the project. The App-OBO scope belongs to the Token C discussion ([Chapter 07](docs/07-token-c-user-assertion.md)), not to §(1D). Replaced the §(1D) OAuth Connection screenshot accordingly (`docs/images/04-05-azure-bot-oauth-connection-foundry.png`).
+- **Chapter 07 §7.2 (Point 1) — Token C scope.** Added the explanation that the App-OBO scope (`api://app-obo/…/access_as_user`) makes Entra place `aud = api://app-obo/…` and `scp = access_as_user` in Token C, enabling the agent's downstream OBO; reworded the "what if we used Foundry as the scope?" note. Replaced the Token C OAuth Connection screenshot (`docs/images/07-01-oauth-connection-token-c-settings.png`).
+- **Chapter 04 §4.1** — Minor wording in the Approach-1 introduction.
+
 ## [v1.1] — 2026-07-02
 
 ### Changed

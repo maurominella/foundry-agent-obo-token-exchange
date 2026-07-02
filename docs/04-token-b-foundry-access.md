@@ -6,7 +6,7 @@
 
 ## 4.1 Approach 1 — Token B as a user-delegated token (not recommended)
 
-Creating Token B as a user-delegated token is **not worth it**, because it means paying the cost of a user-delegated token (consent, `user_impersonation`, etc.) for information that is discarded anyway. Moreover, with a user-delegated token **every single end user** would need the RBAC role on the Foundry project, whereas with the managed identity / service principal in the next approach a **single RBAC assignment** is enough.
+As this section's title says, creating Token B as a user-delegated token is **not worth it**, because it means paying the cost of a user-delegated token (consent, `user_impersonation`, etc.) for information that is discarded anyway. Moreover, with a user-delegated token **every single end user** would need the RBAC role on the Foundry project, whereas with the managed identity / service principal in the next approach a **single RBAC assignment** is enough.
 
 If you nonetheless want to go this way, you must implement the following steps on the Bot's registered application.
 
@@ -70,10 +70,10 @@ Once the Bot's registered application is configured with `client_id`, `client_se
 
 - **Token Exchange URL** = the App ID URI of the **same** registered application (`api://botid-2486b5cf-28b0-4f2d-b7c8-ff71aa856b72`). This is the `aud` claim of the **incoming** SSO token generated toward the Azure Bot by Entra following Teams' request. It tells Entra: *"you must exchange (OBO) the token used to access the Bot's registered application, building another one with this `aud`."*
 - `client_id`, `client_secret`, and `tenant_id` of the registered application associated with our **bot app**. Indeed, OBO works only if the app performing the exchange **matches the one in the `aud`** of the token to be exchanged. Since the token Teams generates for the app carries, as its `aud`, the Application ID URI of the **bot app**, you need the `client_id` + secret of that same app.
-- The **Scope** the bot must ask Entra to mint in the outgoing token, i.e. `api://app-obo/3a0fad96-b026-4f5f-914a-fc6348656f6b/access_as_user` — the scope of the **application used to perform OBO**. This way Entra places the claims `aud = api://app-obo/3a0fad96-b026-4f5f-914a-fc6348656f6b` and `scp = access_as_user` in the **outgoing** token toward Foundry, so that the Foundry Hosted Agent can perform the OBO exchange to obtain the token toward the required downstream backend (e.g. MS Graph).
+- The **Scope** `https://ai.azure.com/.default` makes Entra place the claims `https://ai.azure.com` and `.default` in the token. This allows successful authentication to Foundry — albeit with a "user-token" that Foundry then "strips away" — and it requires that user to hold the **Foundry User** RBAC role on the Foundry project that hosts the agent.
 
-![Azure Bot — OAuth Connection (AAD v2): the App-OBO scope](images/04-05-azure-bot-oauth-connection-foundry.png)
-*Azure Bot — OAuth Connection (AAD v2): Token Exchange URL = the bot app; Scope = `api://app-obo/3a0fad96-…/access_as_user`*
+![Azure Bot — OAuth Connection (AAD v2): the Foundry scope](images/04-05-azure-bot-oauth-connection-foundry.png)
+*Azure Bot — OAuth Connection (AAD v2): Token Exchange URL = the bot app; Scope = `https://ai.azure.com/.default`*
 
 > **Note — interactive OAuth without SSO is a different case.** With the classic "sign-in card" of the auth-code flow, the `client_id` + secret may belong to **any** registered application in the tenant, provided it: (a) has the Bot Token Service redirect URI `https://token.botframework.com/.auth/web/redirect`; and (b) has the required API permissions/scopes (the *Scopes* field) with consent. Only there can the two apps be separate (Bot app ≠ connection app). For the **SSO path** described here, they must be the **same**.
 
