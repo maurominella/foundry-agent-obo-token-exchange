@@ -9,6 +9,18 @@ and this project uses simple, dated version tags (`v1.0`, `v1.1`, …).
 > Changes are additive by default; any rename, reorder, split, or merge is called
 > out explicitly below.
 
+## [v1.5] — 2026-07-04
+
+### Added
+- **Appendix B — Microsoft Official Documentation** (`docs/12-appendix-microsoft-documentation.md`): a summary table plus detailed write-up of the official Microsoft sources (Microsoft Learn pages and a GitHub issue) that back the use of the `x-client-*` pass-through headers and OBO support in Foundry hosted agents.
+- New section **"Is `x-client-user-token` a fake header?"** on the Downstream (App-OBO) page (`docs/11c-app-downstream-obo.md`), covering why the custom header is legitimate and how Token C's security rests on its cryptographic properties (Entra-signed JWT, audience-restricted, short-lived, requires the App-OBO secret to spend).
+- **"Who uses these applications?"** list on the Appendix A index.
+
+### Changed
+- Appendix A corrections: the Bot's purpose is now "creates and authenticates access to the bot service"; corrected the Token Exchange URL description on the Bot page (Teams silently obtains **Token C**, `aud = api://app-obo/…/access_as_user`) and clarified that Token A is never seen inside the bot; added the `CLIENT_USER_TOKEN_HEADER` / assertion lines to the Downstream OBO snippet.
+- Replaced the Bot OAuth Connection screenshot (`docs/images/11-02-bot-oauth-connection-token-c.png`).
+- Linked Appendix B from the README table of contents and repository layout.
+
 ## [v1.4] — 2026-07-03
 
 ### Changed

@@ -17,6 +17,10 @@ This secret, together with the `client_id`, is used to **perform OBO**: we use a
 To perform OBO it requires creating a **confidential application** through MSAL, with `client_id` and `client_secret`:
 
 ```python
+CLIENT_USER_TOKEN_HEADER = "x-client-user-token"
+GRAPH_SCOPES = ["https://graph.microsoft.com/Files.Read"]
+assertion = context.client_headers.get(CLIENT_USER_TOKEN_HEADER, "")
+
 conf_app = msal.ConfidentialClientApplication(
     client_id,
     client_credential=client_secret,
@@ -50,6 +54,24 @@ Key properties of this identity:
 - It **can be shared** across all bots/agents that need to reach downstream services (e.g. MS Graph).
 - The downstream services must be **authorized** in the Entra **API Permissions** section (see below).
 - It serves to create **user-tokens** in which the user is extracted from the "source" token being exchanged.
+
+## Is `x-client-user-token` a "fake header"?
+
+No — it is a **documented Foundry mechanism**: `x-client-*` is the prefix for **pass-through client headers** (Request direction, i.e. from the client to the agent). The exact same construct exists in the Python package (`azure-ai-agentserver-core`, `PlatformHeaders` / `CLIENT_HEADER_PREFIX = "x-client-"`).
+
+In other words, the gateway recognizes the `x-client-*` prefix as the **official pass-through channel** toward the agent container (in the `azure-ai-agentserver-core` SDK, the constant `CLIENT_HEADER_PREFIX = "x-client-"`). The agent reads it via `context.client_headers`. So it is exactly the channel intended to carry context/credentials from the client to the agent.
+
+**Fundamental point: the security of Token C does not depend on which header carries it, but on its cryptographic properties:**
+
+- It is a **JWT signed by Entra (RS256)**. It cannot be forged: no one can fabricate a valid Token C without Entra's private key.
+- It is **audience-restricted** (`aud = api://app-obo/...`): usable only toward that downstream app, nowhere else.
+- It is **short-lived** (~1h).
+- To "spend" it (OBO → Graph) you need the **App-OBO `client_secret`**: merely holding the token is not enough. Indeed, with a malformed/forged token, Entra responds `AADSTS50027` and the OBO fails.
+- **Consequence:** even if someone intercepted or injected a value into that header, they would get nothing — the agent does not blindly "trust" the header, because the token is cryptographically validated by Entra at OBO time.
+
+**In transit it is as protected as the `Authorization` header.** Calls to Foundry are over HTTPS/TLS: all headers (including `x-client-user-token`) are encrypted in transit, exactly like `Authorization`. There is no protection difference between a standard header and a custom header over TLS. The body would be encrypted the same way too — so "header vs body" is irrelevant for confidentiality in transit.
+
+> For the official Microsoft references backing this up, see [Appendix B — Microsoft Official Documentation](12-appendix-microsoft-documentation.md).
 
 ## Expose an API
 

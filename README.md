@@ -56,6 +56,7 @@ This documentation analyses how that flow applies to **Microsoft Foundry agents 
 | 09 | [Publishing the App to Teams](docs/09-publishing-to-teams.md) | Manifest, package ZIP, sideload, verify |
 | 10 | [Wiring Token C & Verification](docs/10-wiring-and-verification.md) | Forwarding Token C in code + the expected token claims |
 | A | [Appendix — The Three Registered Applications](docs/11-appendix-app-registrations.md) | Per-app reference: Overview, Certificates & secrets, Expose an API, API Permissions |
+| B | [Appendix — Microsoft Official Documentation](docs/12-appendix-microsoft-documentation.md) | Official Microsoft sources for the `x-client-*` pass-through headers and OBO support |
 
 ---
 
@@ -81,6 +82,7 @@ foundry-agent-obo-token-exchange/
     ├── 11a-app-bot.md                      ← Appendix A.1 (Bot)
     ├── 11b-app-foundry-access.md           ← Appendix A.2 (Foundry Access)
     ├── 11c-app-downstream-obo.md           ← Appendix A.3 (Downstream / App-OBO)
+    ├── 12-appendix-microsoft-documentation.md   ← Appendix B (Microsoft official docs)
     └── images/                    ← all screenshots referenced by the chapters
 ```
 

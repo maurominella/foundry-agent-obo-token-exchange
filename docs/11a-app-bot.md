@@ -2,7 +2,7 @@
 
 [← Back to the three applications](11-appendix-app-registrations.md)
 
-**Role:** authenticates access to the bot service.
+**Role:** creates and authenticates access to the bot service.
 
 | Field | Value |
 |-------|-------|
@@ -26,9 +26,9 @@ How do we perform this OBO? We could do it through an MSAL Confidential Applicat
 
 Note that the OAuth Connection can perform the OBO precisely because **the Bot is the `aud` of Token A**. You must authenticate as that audience → which is why the **Bot's credentials** are needed.
 
-The **Token Exchange URL** is the element that enables the bot's **silent Single Sign-On (SSO)** in Teams. Without it the connection would only do interactive login (card + browser + redirect); with it, it can perform the SSO exchange without asking the user anything. This value equals the **App ID URI** of the Bot registered application — here `api://botid-2486…` — i.e. the identifier of the resource/audience Teams must request the first SSO token for (Token A). By setting the Token Exchange URL, we tell the OAuth Connection: *"to obtain the token you may attempt an SSO exchange; there is no need to show the sign-in card."* In fact, the one that generates that token is Teams: Teams sees that URI and silently asks Entra for an SSO token with `aud = that URI` → **Token A** (`aud = api://botid-2486b5cf...`).
+The **Token Exchange URL** is the element that enables the bot's **silent Single Sign-On (SSO)** in Teams. Without it the connection would only do interactive login (card + browser + redirect); with it, it can perform the SSO exchange without asking the user anything. This value equals the **App ID URI** of the Bot registered application — here `api://botid-2486…` — i.e. the identifier of the resource/audience Teams must request the first SSO token for (Token A). By setting the Token Exchange URL, we tell the OAuth Connection: *"to obtain the token you may attempt an SSO exchange; there is no need to show the sign-in card."* In fact, the one that generates that token is Teams: Teams sees that URI and silently asks Entra for **Token C** (with `aud = api://app-obo/3a0fad96-b026-4f5f-914a-fc6348656f6b/access_as_user`).
 
-Inside the BOT, Token A transits only in the `invoke signin/tokenExchange`, handled by `handleTeamsSigninTokenExchange` (`bot.js`), where it is available as `query.token`. The Token Service uses it as the assertion for the OBO and produces **Token C**. It is Token C that we then retrieve in `callStep` via `stepContext.result.token` (the `userAssertion` variable), and that we forward to the agent in the custom header:
+Inside the BOT, **we never see Token A**, because it transits only in the `invoke signin/tokenExchange`, handled by `handleTeamsSigninTokenExchange` (`bot.js`), where it is available as `query.token`. The Token Service uses it as the assertion for the OBO and produces **Token C**:
 
 ```js
 async handleTeamsSigninTokenExchange(context, query) {
@@ -51,7 +51,7 @@ async handleTeamsSigninTokenExchange(context, query) {
 }
 ```
 
-Inside the BOT we retrieve this Token C (in the `stepContext` of `callStep`, from which we extract the token — called `userAssertion` — with `stepContext.result.token`):
+It is Token C that we then retrieve in `callStep` via `stepContext.result.token` (the `userAssertion` variable), and that we forward to the agent in the custom header. Inside the BOT we retrieve this Token C (in the `stepContext` of `callStep`, from which we extract the token — called `userAssertion` — with `stepContext.result.token`):
 
 ```js
 // 2) Retrieve Token C (user assertion) - mainDialog.js
