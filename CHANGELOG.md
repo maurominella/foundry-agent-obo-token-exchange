@@ -9,6 +9,16 @@ and this project uses simple, dated version tags (`v1.0`, `v1.1`, …).
 > Changes are additive by default; any rename, reorder, split, or merge is called
 > out explicitly below.
 
+## [v1.4] — 2026-07-03
+
+### Changed
+- **Appendix A restructured for readability.** `docs/11-appendix-app-registrations.md` is now an **index page** with a horizontal at-a-glance table of the three applications, each linking to its own page. The per-application content was split out of the single blade-organized file into three dedicated pages, each covering that application's *Certificates & secrets*, *Expose an API*, and *API Permissions*:
+  - `docs/11a-app-bot.md` — Bot (`echo-token-bot`)
+  - `docs/11b-app-foundry-access.md` — Foundry Access (`svc-foundry-dataplane-access-dev`)
+  - `docs/11c-app-downstream-obo.md` — Downstream / App-OBO (`svc-agent-obo-downstream-dev`)
+- Each application page links back to the index; each image is now followed by `<br/>` so its caption renders **below** the image instead of beside it.
+- Updated the README repository layout to list the new appendix pages.
+
 ## [v1.3] — 2026-07-03
 
 ### Added

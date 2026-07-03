@@ -77,7 +77,10 @@ foundry-agent-obo-token-exchange/
     ├── 08-token-d-downstream-obo.md
     ├── 09-publishing-to-teams.md
     ├── 10-wiring-and-verification.md
-    ├── 11-appendix-app-registrations.md   ← Appendix A (the 3 registered applications)
+    ├── 11-appendix-app-registrations.md   ← Appendix A index (the 3 applications)
+    ├── 11a-app-bot.md                      ← Appendix A.1 (Bot)
+    ├── 11b-app-foundry-access.md           ← Appendix A.2 (Foundry Access)
+    ├── 11c-app-downstream-obo.md           ← Appendix A.3 (Downstream / App-OBO)
     └── images/                    ← all screenshots referenced by the chapters
 ```
 
