@@ -23,7 +23,7 @@ The `client_id` + `client_secret` of the Bot registered application are used to 
 
 How do we perform this OBO? We could do it through an MSAL Confidential Application (as Foundry will later do to exchange that token for one with `aud = MS Graph`), but here we choose a more **managed** method: we use an **OAuth Connection**, to which we provide `client_id` and `client_secret` so it exchanges the user-token received from Teams (Token A) for **another user-token still associated with the same Teams user** (delegated identity preserved), but with the `aud` + `scp` of the downstream OBO app → **Token C**:
 
-![Bot — OAuth Connection that mints Token C](images/11-02-bot-oauth-connection-token-c.png)
+![Bot — OAuth Connection that mints Token C](images/11-02-bot-oauth-connection-token-c.png)<br/>
 *Bot — OAuth Connection (AAD v2) that exchanges Token A for Token C*
 
 Note that the OAuth Connection can perform the OBO precisely because **the Bot is the `aud` of Token A**. You must authenticate as that audience → which is why the **Bot's credentials** are needed.
