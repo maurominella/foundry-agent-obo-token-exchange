@@ -10,9 +10,9 @@
 git clone https://github.com/maurominella/foundry-agent-obo-token-exchange.git
 ```
 
-> - **Author:** Mauro Minella — Senior Cloud Solution Architect, Microsoft
-> - **Status:** Validated end-to-end in a development environment
-> - **Scope:** How to carry the identity of the user signed in to Microsoft Teams all the way from the Teams client, through a custom bot and a Microsoft Foundry hosted agent (published to the Agent 365 registry), down to an Entra-protected backend that the agent calls on the user's behalf.
+> **Author:** Mauro Minella — Senior Cloud Solution Architect, Microsoft
+> **Status:** Validated end-to-end in a development environment
+> **Scope:** How to carry the identity of the user signed in to Microsoft Teams all the way from the Teams client, through a custom bot and a Microsoft Foundry hosted agent (published to the Agent 365 registry), down to an Entra-protected backend that the agent calls on the user's behalf.
 
 ---
 
@@ -55,6 +55,7 @@ This documentation analyses how that flow applies to **Microsoft Foundry agents 
 | 08 | [Token D — The Downstream OBO](docs/08-token-d-downstream-obo.md) | The agent mints the downstream token on behalf of the user |
 | 09 | [Publishing the App to Teams](docs/09-publishing-to-teams.md) | Manifest, package ZIP, sideload, verify |
 | 10 | [Wiring Token C & Verification](docs/10-wiring-and-verification.md) | Forwarding Token C in code + the expected token claims |
+| A | [Appendix — The Three Registered Applications](docs/11-appendix-app-registrations.md) | Per-app reference: Overview, Certificates & secrets, Expose an API, API Permissions |
 
 ---
 
@@ -76,6 +77,7 @@ foundry-agent-obo-token-exchange/
     ├── 08-token-d-downstream-obo.md
     ├── 09-publishing-to-teams.md
     ├── 10-wiring-and-verification.md
+    ├── 11-appendix-app-registrations.md   ← Appendix A (the 3 registered applications)
     └── images/                    ← all screenshots referenced by the chapters
 ```
 

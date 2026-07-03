@@ -9,6 +9,12 @@ and this project uses simple, dated version tags (`v1.0`, `v1.1`, …).
 > Changes are additive by default; any rename, reorder, split, or merge is called
 > out explicitly below.
 
+## [v1.3] — 2026-07-03
+
+### Added
+- **Appendix A — The Three Registered Applications** (`docs/11-appendix-app-registrations.md`): a per-application reference for the Bot, Foundry-access, and Downstream (App-OBO) registrations, organized by Entra blade — Overview, Certificates & secrets, Expose an API, and API Permissions — with the relevant code snippets and 11 screenshots (`docs/images/11-01-*` … `11-11-*`).
+- Linked the appendix from the README table of contents and repository layout.
+
 ## [v1.2] — 2026-07-02
 
 ### Changed
