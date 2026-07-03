@@ -150,12 +150,12 @@ Key properties of this identity:
 
 ### A.3.1 Bot registered application
 
-![Bot — Expose an API: Application ID URI](images/11-05-bot-expose-api-app-id-uri.png)
+![Bot — Expose an API: Application ID URI](images/11-05-bot-expose-api-app-id-uri.png)<br/>
 *Bot — Expose an API: the Application ID URI*
 
 The **Application ID URI** lets you "point" to this registered application from the outside — for example when the Teams App (through its manifest) must point to the BOT that acts as the bridge toward the agent. Note that the URL reported here contains the `botid-` prefix; even better, you can use the explicit syntax `api://app-bot/2486…`.
 
-![Bot — Expose an API: Scopes and authorized client applications](images/11-06-bot-expose-api-scopes-and-clients.png)
+![Bot — Expose an API: Scopes and authorized client applications](images/11-06-bot-expose-api-scopes-and-clients.png)<br/>
 *Bot — Expose an API: the `access_as_user` scope and the authorized Teams clients*
 
 - **Scopes** — we add one of type `access_as_user`, because this is the actual scope the Teams client will use.
@@ -163,7 +163,7 @@ The **Application ID URI** lets you "point" to this registered application from 
 
 ### A.3.2 Foundry Access registered application
 
-![Foundry Access — Expose an API: not needed](images/11-07-foundry-access-expose-api-not-needed.png)
+![Foundry Access — Expose an API: not needed](images/11-07-foundry-access-expose-api-not-needed.png)<br/>
 *`svc-foundry-dataplane-access-dev` — Expose an API: neither App ID URI nor scope is needed*
 
 Here **neither** the Application ID URI **nor** a scope is needed, because **no one "authenticates" against this registered application**. The bot uses `client_id` + `client_secret` to **impersonate** the application and request a token, in its own name, toward Foundry:
@@ -197,7 +197,7 @@ result = app.acquire_token_on_behalf_of(
 
 ### A.3.3 Downstream Access registered application (App-OBO)
 
-![App-OBO — Expose an API: scope and authorized client](images/11-08-app-obo-expose-api-scope-and-client.png)
+![App-OBO — Expose an API: scope and authorized client](images/11-08-app-obo-expose-api-scope-and-client.png)<br/>
 *`svc-agent-obo-downstream-dev` — Expose an API: the `access_as_user` scope and the authorized client (the Bot)*
 
 This scope is used when the bot creates the token to pass to Foundry in the `x-client-user-token` parameter — associated with the user connected to Teams (which the bot finds in the token it received from Teams) and destined for this downstream OBO app.
@@ -208,7 +208,7 @@ The **authorized client application** shown here is the application authorized t
 
 ### A.4.1 Bot registered application
 
-![Bot — API Permissions](images/11-09-bot-api-permissions.png)
+![Bot — API Permissions](images/11-09-bot-api-permissions.png)<br/>
 *Bot — API Permissions: delegated permission to the App-OBO app + admin consent*
 
 Here we specify the **delegated permissions** granted to the app, so that it can exchange its "own" tokens (those with `aud = api://botid-2486…` sent by Teams) for tokens with the **same user** but the scope of further Entra-protected services.
@@ -219,10 +219,10 @@ The **"Grant for &lt;tenant_name&gt;"** avoids the consent that would otherwise 
 
 ### A.4.2 Downstream Access (App-OBO)
 
-![App-OBO — API Permissions: Microsoft Graph Files.Read](images/11-10-app-obo-api-permissions-graph-files-read.png)
+![App-OBO — API Permissions: Microsoft Graph Files.Read](images/11-10-app-obo-api-permissions-graph-files-read.png)<br/>
 *`svc-agent-obo-downstream-dev` — API Permissions: Microsoft Graph `Files.Read` (delegated)*
 
-![App-OBO — API Permissions: admin consent granted](images/11-11-app-obo-api-permissions-admin-consent.png)
+![App-OBO — API Permissions: admin consent granted](images/11-11-app-obo-api-permissions-admin-consent.png)<br/>
 *`svc-agent-obo-downstream-dev` — API Permissions: admin consent granted*
 
 Here we specify the **delegated permissions** granted to the app, so that it can exchange its "own" tokens (those with `aud = api://app-obo/3a0f…`) for tokens with the **same user** but the scope of further Entra-protected services.
