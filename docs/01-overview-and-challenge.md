@@ -4,7 +4,7 @@
 
 The entry point is the **Bot Service**, the cloud router that allows Teams to communicate with the bot through the Bot Framework **Activity Protocol**.
 The object we create in Azure — the **Azure Bot** — is the registration that connects the channels (Teams, Outlook, WhatsApp…) to our **custom bot** through the Bot Service.
-In the Azure Bot's Configuration blade we set the **Messaging endpoint**, typically a public URL exposing /api/messages, where our **custom bot** is hosted.
+In the Azure Bot's **Configuration** blade we set the **Messaging endpoint**, typically a public URL exposing `/api/messages`, where our **custom bot** is hosted.
 
 Our custom bot receives *activities* from the Bot Service and produces replies, possibly invoking agents or external services. Those agents may in turn depend on **downstream services** — ticketing, databases, CRM — that need to know the identity of the user who asked the question.
 
