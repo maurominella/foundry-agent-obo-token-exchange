@@ -10,8 +10,8 @@ Our custom bot receives *activities* from the Bot Service and produces replies, 
 
 For this to be possible, the identity has to be carried across three hops:
 
-1. From **Teams** to the **bot**
-2. From the **bot** to the **agent**
+1. From **Teams** to our **custom bot**
+2. From our **custom bot** to the **agent**
 3. From the **agent** to the **downstream services**
 
 Identity travels inside tokens whose claims include the **audience** (`aud`), which identifies the recipient of the token. Each hop therefore needs a token with a different audience. This chain of conversions — **token exchange** — is what lets each component operate **On Behalf Of the user (OBO)**.
